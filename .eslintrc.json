@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-console": "off",
+    "comma-dangle": "off",
+    "func-name": ["error", "never"],
+    "react/jsx-no-target-blank": "1"
+
+  }
+}
