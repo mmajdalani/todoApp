@@ -10,10 +10,11 @@ const Root = () => {
         <Router>
             <Switch>
                 <Route exact path="/" component={App}/>
-
             </Switch>
         </Router>
     )
+
+
 };
 
 ReactDOM.render(<Root />, document.getElementById('main'));
