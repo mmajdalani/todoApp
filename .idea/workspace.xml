@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="45e3e05b-90c0-4640-994b-465498a67b57" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/components/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/Task.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/connection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/connection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="45e3e05b-90c0-4640-994b-465498a67b57" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -563,7 +554,7 @@
       <workItem from="1535401413915" duration="16021000" />
       <workItem from="1535639369126" duration="1559000" />
       <workItem from="1536074351562" duration="11443000" />
-      <workItem from="1536149872387" duration="17302000" />
+      <workItem from="1536149872387" duration="17550000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit, working">
       <created>1534865111806</created>
@@ -576,7 +567,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111684000" />
+    <option name="totallyTimeSpent" value="111932000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
