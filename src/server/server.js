@@ -7,10 +7,12 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 // our localhost port
 const port = process.env.PORT || 5000;
-
+//const localhost = process.env.IP;
 const app = express();
+
 
 
 // Replace with your mongoLab URI
@@ -33,11 +35,23 @@ let taskSchema = new Schema({
     name: String
 });
 
+let tempSchema = new Schema({
+
+    temp: Number  
+
+})
 
 
 let Task = mongoose.model('Task', taskSchema);
+
+let Temp = mongoose.model('Temp', tempSchema);
 // our server instance
 const http = require('http').Server(app);
+
+
+
+
+
 
 
 
@@ -77,19 +91,51 @@ listen('new').pipe(
     skip(1)
 )
     .subscribe(({io, client, data}) => {
-        console.log("new task!");
-        console.log(`timestamp: ${data.timestamp}`);
-        console.log(`name: ${data.name}`);
-        if (data.name.length > 0) {
-            let date = new Date(data.timestamp);
-            let newTask = new Task({timestamp: date, name:data.name});
-            newTask.save(function (err, newTask) {
-                if (err) return console.error(err);
-            });
+		if (data.name.length > 0) {
+                	console.log("new task!");
+                	console.log(`timestamp: ${data.timestamp}`);
+                	console.log(`name: ${data.name}`);
+                	let date = new Date(data.timestamp);
+                	let newTask = new Task({timestamp: date, name:data.name});
+                	newTask.save(function (err, newTask) {
+                		if (err) return console.error(err);
+                	});
+              		client.broadcast.emit('newTask', newTask)
+        	}
+	});
+		
+       
 
-            client.broadcast.emit('newTask', newTask)
-        }
-    });
+// PYTHON GPIO 
+//       	const { spawn } = require('child_process');
+//      	const pyprog = spawn('python', ['/home/odroid/git/todoApp/src/server/blink.py']);
+//
+//       	pyprog.stdout.on('data', function(data) {
+//               	console.log("Python script executed\n")
+//		
+//      	});
+//
+//       	pyprog.stderr.on('data', (data) => {
+//               	console.log("Python error: " + data.toString())
+//		
+//      	});
+
+// C DHT
+//	const execFile = require('child_process').execFile;
+//
+//	var child = execFile("/home/odroid/git/todoApp/src/server/dht", function(error, stdout, stderr){
+//		if (stderr.toString()){
+//			console.log(stderr.toString())
+//		}
+//		else{		
+//			console.log("No errors!")
+//	}
+//	});
+//
+	
+
+
+
 
 
 listen('remove').pipe(
@@ -115,9 +161,62 @@ listen('remove').pipe(
 
 connection$
     .subscribe(({io, client}) => {
-        console.log("Connected");
-    });
+        let temp;
+	console.log("Connected");
+   
+	//clock
+	setInterval(function(){
+
+		io.emit('time', new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"));
+	}, 1000);
+
+		
+	
+	//Read Temperature every 2 seconds and emit to client
+	setInterval(function(){	
+		const execFile = require('child_process').execFile;
+
+                let child = execFile("/home/odroid/git/todoApp/src/server/dht22", function(error, stdout, stderr){
+					
+                if(stdout != 0 ){
+			let newTemp = new Temp({temp : stdout})
+			newTemp.save(function(err, newTask){
+				if (err) return console.error(err);
+			});
+			temp = stdout;
+//	               	console.log(stdout)
+
+                	io.emit('temp', stdout + "°C")
+                
+			}       
+		else{
+//			console.log(temp)
+			let newTemp = new Temp({ temp:  temp })
+			newTemp.save(function (err, newTask) {
+              			if (err) return console.error(err);
+        	        
+		});
+
+			io.emit('temp', temp + "°C")
+		}
+   
+	})
+
+	}, 2050);
+
+});
+
 disconnect$.subscribe(() => console.log('Disconnected'));
 
 
-http.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+
+
+
+app.use(express.static(path.join(__dirname, '../../public')));
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+});
+
+http.listen(port, "0.0.0.0", () => console.log(`Listening on port ${port}`));

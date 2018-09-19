@@ -19,7 +19,9 @@ class App extends Component {
         this.removeTaskItem = this.removeTaskItem.bind(this);
 
         this.state ={
-            tasks: {}
+            tasks: {},
+	    time: '',
+	    temp: ''
         };
 
         this.addtask = new BehaviorSubject({
@@ -72,8 +74,19 @@ class App extends Component {
         listen('newTask').subscribe(data => {
             addMessage(data.from, data.message);
             console.log('task');
+	});
+
+	listen('time').subscribe(time => {
+		console.log(time);
+		this.setState({time: time})
+
+	});
+	listen('temp').subscribe(temp => {
+		console.log(temp);
+		this.setState({temp: temp})
+
         });
-        };
+    }
 
     componentWillUpdate(nextProps, nextState){
             localStorage.setItem(`task`, JSON.stringify(nextState.tasks))
@@ -142,10 +155,13 @@ class App extends Component {
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo"/>
                          <h1 className="App-title">React To-Do</h1>
-                    </header>
+			 <h1 className="App-title">{this.state.time}</h1>
+                	 <div className="topleft"> {this.state.temp}</div>    
+		</header>
                      <p className="App-intro">
                         To get started, add a task!
-                     </p>
+
+		    </p>
                  </div>
                  <div>
                      <h2> Tasks </h2>
