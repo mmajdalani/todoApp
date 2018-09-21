@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server/server.js",
     "build": "webpack",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map ",
+    "client": "webpack-dev-server --mode development --devtool inline-source-map --host 0.0.0.0",
     "server": "nodemon src/server/server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "watch": "concurrently --names \"webpack, stylus\" --prefix name \"yarn run dev\" \"yarn run styles:watch\"",
