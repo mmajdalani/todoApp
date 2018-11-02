@@ -20,8 +20,9 @@ class App extends Component {
 
         this.state ={
             tasks: {},
-	    time: '',
-	    temp: ''
+	        time: '',
+            vin: ''
+	  //  temp: ''
         };
 
         this.addtask = new BehaviorSubject({
@@ -81,11 +82,17 @@ class App extends Component {
 		this.setState({time: time})
 
 	});
-	listen('temp').subscribe(temp => {
-		console.log(temp);
-		this.setState({temp: temp})
 
-        });
+	listen('vin').subscribe(vin => {
+	    console.log(vin);
+	    this.setState({vin: vin})
+
+	});
+	// listen('temp').subscribe(temp => {
+	// 	console.log(temp);
+	// 	this.setState({temp: temp})
+    //
+    //     });
     }
 
     componentWillUpdate(nextProps, nextState){
@@ -156,7 +163,12 @@ class App extends Component {
                         <img src={logo} className="App-logo" alt="logo"/>
                          <h1 className="App-title">React To-Do</h1>
 			 <h1 className="App-title">{this.state.time}</h1>
-                	 <div className="topleft"> {this.state.temp}</div>    
+                	 {/*<div className="topleft"> {this.state.temp}</div>    */}
+                        <h1 className ="App-title">
+                        <div className="topleft"> Voltage: {this.state.vin} V</div>
+                        </h1>
+
+
 		</header>
                      <p className="App-intro">
                         To get started, add a task!
